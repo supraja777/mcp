@@ -1,17 +1,12 @@
 import asyncio
 import json
 from extract_fields import extract_fields_from_response
-
+from form_data import data
 class GoogleAgent:
     def __init__(self, session):
         self.session = session
     
     async def fill_basic_fields(self, inputs):
-        data = {
-            "first_name": "Supraja",
-            "last_name": "Srikanth",
-            "email": "supraja@example.com"
-        }
 
         for field in inputs:
             field_id = field.get("id", "").lower()
@@ -89,6 +84,7 @@ class GoogleAgent:
                 "puppeteer_navigate",
                 arguments={"url": url}
             )
+            
         except Exception as e:
             print("❌ Navigation failed:", e)
             return
@@ -109,3 +105,5 @@ class GoogleAgent:
                 f"Placeholder: {i['placeholder']}"
             )
         await self.fill_basic_fields(inputs)
+        while True:
+            await asyncio.sleep(60)
