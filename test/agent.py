@@ -5,6 +5,35 @@ from extract_fields import extract_fields_from_response
 class GoogleAgent:
     def __init__(self, session):
         self.session = session
+    
+    async def fill_basic_fields(self, inputs):
+        data = {
+            "first_name": "Supraja",
+            "last_name": "Srikanth",
+            "email": "supraja@example.com"
+        }
+
+        for field in inputs:
+            field_id = field.get("id", "").lower()
+
+            if not field_id:
+                continue
+
+            for key, value in data.items():
+                if key in field_id:
+                    try:
+                        print(f"✍️ Filling {field_id} → {value}")
+
+                        await self.session.call_tool(
+                            "puppeteer_fill",
+                            arguments={
+                                "selector": f"#{field['id']}",
+                                "value": value
+                            }
+                        )
+
+                    except Exception as e:
+                        print(f"❌ Failed to fill {field_id}: {e}")
 
     async def list_input_tags(self):
         
@@ -79,3 +108,4 @@ class GoogleAgent:
                 f"ID: {i['id']} | "
                 f"Placeholder: {i['placeholder']}"
             )
+        await self.fill_basic_fields(inputs)
