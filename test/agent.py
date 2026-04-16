@@ -43,7 +43,10 @@ class GoogleAgent:
                         type: el.type || 'text',
                         name: el.name || '',
                         id: el.id || '',
-                        placeholder: el.placeholder || ''
+                        placeholder: el.placeholder || '',
+                        aria_label: el.getAttribute('aria-label') || '',
+                        aria_desc: el.getAttribute('aria-describedby') || '',
+                        label: doc.querySelector(`label[for="${el.id}"]`)?.innerText || ''
                     }));
             };
 
@@ -103,6 +106,8 @@ class GoogleAgent:
                 f"Name: {i['name']} | "
                 f"ID: {i['id']} | "
                 f"Placeholder: {i['placeholder']}"
+                f"aria_label : {i['aria_label']}",
+                f"label: {i['label']}"
             )
         await self.fill_basic_fields(inputs)
         while True:

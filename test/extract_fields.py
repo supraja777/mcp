@@ -7,6 +7,7 @@ def extract_fields_from_response(response):
     """
 
     try:
+        print("Actual response is ", response)
         raw_text = response.content[0].text.strip()
 
         print("RAW RESPONSE:", raw_text)  # debug (you can remove later)
